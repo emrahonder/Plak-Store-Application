@@ -25,7 +25,7 @@ public class OperationController {
     @GetMapping("/plaks")
     @ResponseBody
     public List<Plak> getPlakList(HttpServletRequest request) {
-        return (List<Plak>) plakRepository.findAll(Sort.by(Sort.Direction.ASC, "singer"));
+        return plakRepository.findAll(Sort.by(Sort.Direction.ASC, "singer"));
     }
 
     @GetMapping("/plakstats")
@@ -58,7 +58,7 @@ public class OperationController {
             return plak;
         }else {
             res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return null;
+            return Optional.empty();
         }
     }
 

@@ -8,7 +8,7 @@ The endpoints for this WS is visible from Swagger UI: http://localhost:8080/swag
 For MySQL configuration, application.properties should be updated before run.
 ```
 spring.datasource.url=jdbc:mysql://URL:PORT/DATABASENAME?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8
-spring.datasource.username=admin
-spring.datasource.password=*000000*
+spring.datasource.username=USERNAME
+spring.datasource.password=PASSWORD
 
 ```

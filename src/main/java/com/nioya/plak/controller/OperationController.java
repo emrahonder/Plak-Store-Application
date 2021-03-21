@@ -33,7 +33,7 @@ public class OperationController {
     public List<PlakStat> getPlakStats(HttpServletRequest request) {
 
         List<PlakStat> plakStats =  plakRepository.groupBy();
-        plakStats.stream().forEach( p -> p.setVisibleName(PlakTypes.getEnumValue(p.getCode())));
+        plakStats.forEach( p -> p.setVisibleName(PlakTypes.getEnumValue(p.getCode())));
 
         return plakStats;
     }
@@ -52,13 +52,14 @@ public class OperationController {
 
     @GetMapping("/plak/{id}")
     @ResponseBody
-    public Optional<Plak> getPlakByID(HttpServletRequest request, @PathVariable int id, HttpServletResponse res) {
-        Optional<Plak> plak = plakRepository.findById(id);
-        if(plak.isPresent()){
+    public Plak getPlakByID(HttpServletRequest request, @PathVariable int id, HttpServletResponse res) {
+        Plak plak = plakRepository.findById(id).get();
+        if(plak != null){
+            plak.setTypeFriendly(PlakTypes.getEnumValue(plak.getType()));
             return plak;
         }else {
             res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return Optional.empty();
+            return null;
         }
     }
 
@@ -66,14 +67,17 @@ public class OperationController {
     @PostMapping("/plak")
     @ResponseBody
     public Plak createPlak(HttpServletRequest request, @RequestBody Plak plak) {
-        return plakRepository.save(plak);
+        Plak plakResult = plakRepository.save(plak);
+        plakResult.setTypeFriendly(PlakTypes.getEnumValue(plakResult.getType()));
+        return plakResult;
     }
 
     @PutMapping("/plak")
     @ResponseBody
     public Plak setPlak(HttpServletRequest request, @RequestBody Plak plak) {
-        return plakRepository.save(plak);
-
+        Plak plakResult = plakRepository.save(plak);
+        plakResult.setTypeFriendly(PlakTypes.getEnumValue(plakResult.getType()));
+        return plakResult;
     }
 
     @DeleteMapping("/plak/{id}")

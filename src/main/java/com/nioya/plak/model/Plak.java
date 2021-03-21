@@ -13,6 +13,7 @@ public class Plak {
     private Integer id;
     String singer;
     String type;
+    String typeFriendly;
     String song1;
     String song2;
 
